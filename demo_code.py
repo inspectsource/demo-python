@@ -79,6 +79,7 @@ def moon_chooser(moon, moons=["europa", "callisto", "phobos"]):
 
 
 def get_users():
+    import pdb; pdb.set_trace()
     raw = '"username") AS "val" FROM "auth_user" WHERE "username"="admin" --'
     return User.objects.annotate(val=RawSQL(raw, []))
 
