@@ -16,11 +16,12 @@ class BaseNumberGenerator:
     def __init__(self):
         self.limits = (1, 10)
 
-    def get_number(self, min_max):
+    def get_number(self, min_max=[1, 2, 3]):
         raise NotImplemented
 
     def smethod():
         """static method-to-be"""
+        pdb.set_trace()
 
     smethod = staticmethod(smethod)
 
