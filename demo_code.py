@@ -14,13 +14,15 @@ class BaseNumberGenerator:
     """Declare a method -- `get_number`."""
 
     def __init__(self):
+        pdb.set_trace()
         self.limits = (1, 10)
 
-    def get_number(self, min_max):
+    def get_number(self, min_max=[1, 2, 3]):
         raise NotImplemented
 
     def smethod():
         """static method-to-be"""
+        raise NotImplemented
 
     smethod = staticmethod(smethod)
 
@@ -42,7 +44,7 @@ class RandomNumberGenerator:
         return random.randint(*min_max)
 
 
-class ImaginaryNumber:
+class ImaginaryNumber(RandomNumberGenerator, RandomNumberGenerator):
     """Class to represent an imaginary number."""
     def __init__(self):
         self.real = 0
