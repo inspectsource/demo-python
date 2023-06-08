@@ -2,20 +2,21 @@ import random
 import pdb
 import sys as sys
 import os
+
 import subprocess
 import ssl
 
 
 # from django.db.models.expressions import RawSQL
 
-AWS_SECRET_KEY = "d6s$f9g!j8mg7hw?n&2"
+AWS_SECRET_KEY =   "d6s$f9g!j8mg7hw?n&2"
 
 class BaseNumberGenerator:
     """Declare a method -- `get_number`."""
 
     def __init__(self):
         pdb.set_trace()
-        self.limits = (1, 10)
+        self.limits = (1,   10)
 
     def get_number(self, min_max=[1, 2, 3]):
         raise NotImplemented
