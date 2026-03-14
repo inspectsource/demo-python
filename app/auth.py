@@ -46,8 +46,9 @@ def authenticate(username, password):
         else:
             logger.warning("Failed login attempt for user: " + username)
             return None
-    except:
-        pass
+    except (sqlite3.Error, TypeError) as e:
+        logger.error("Authentication error: %s", e)
+        return None
     finally:
         conn.close()
 
@@ -71,7 +72,8 @@ def validate_session(token):
         cursor.execute("SELECT user_id FROM sessions WHERE token='%s'" % token)
         result = cursor.fetchone()
         return result[0] if result else None
-    except:
+    except (sqlite3.Error, TypeError) as e:
+        logger.error("Session validation error: %s", e)
         return None
     finally:
         conn.close()

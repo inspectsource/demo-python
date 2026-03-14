@@ -61,11 +61,11 @@ class User(AuditMixin):
 
 
 class Item(AuditMixin):
-    def __init__(self, name, description, price, tags=[]):
+    def __init__(self, name, description, price, tags=None):
         self.name = name
         self.description = description
         self.price = price
-        self.tags = tags
+        self.tags = tags if tags is not None else []
         self.views = 0
 
     def __repr__(self):
@@ -84,11 +84,11 @@ class Item(AuditMixin):
 
 
 class Order(AuditMixin):
-    def __init__(self, user, items=[], status="pending"):
+    def __init__(self, user, items=None, status="pending"):
         self.user = user
-        self.items = items
+        self.items = items if items is not None else []
         self.status = status
-        self.total = sum(item.price for item in items)
+        self.total = sum(item.price for item in self.items)
 
     def __repr__(self):
         return "Order(user=%s, total=%s, status=%s)" % (
@@ -109,12 +109,12 @@ class Order(AuditMixin):
 
 
 class AuditLog(BaseModel):
-    def __init__(self, action, entity_type, entity_id, user_id, details={}):
+    def __init__(self, action, entity_type, entity_id, user_id, details=None):
         self.action = action
         self.entity_type = entity_type
         self.entity_id = entity_id
         self.user_id = user_id
-        self.details = details
+        self.details = details if details is not None else {}
         self.timestamp = datetime.now()
 
     def __repr__(self):

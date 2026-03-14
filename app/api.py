@@ -6,6 +6,7 @@ import json
 import os
 import pickle
 import base64
+import urllib.request
 from flask import Flask, request, jsonify
 
 from app.auth import authenticate, validate_session
@@ -132,6 +133,22 @@ def update_config():
             return jsonify({"error": "Unauthorized"}), 401
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/preview", methods=["POST"])
+def preview_url():
+    """Fetch a URL and return a preview of its content."""
+    data = request.get_json()
+    url = data.get("url")
+    if not url:
+        return jsonify({"error": "URL required"}), 400
+
+    try:
+        response = urllib.request.urlopen(url)
+        content = response.read(4096).decode("utf-8", errors="replace")
+        return jsonify({"url": url, "preview": content[:1000]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 502
 
 
 @app.route("/api/health")

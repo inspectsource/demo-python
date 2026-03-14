@@ -1,6 +1,7 @@
 """Shared utility functions."""
 
 import os
+import re
 import random
 import string
 import subprocess
@@ -109,6 +110,12 @@ def ping_host(host):
 
 def get_env(key, default=None):
     return os.environ.get(key, default)
+
+
+def validate_email(email):
+    """Validate an email address format."""
+    pattern = re.compile(r"^([a-zA-Z0-9_.+-]+)+@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$")
+    return bool(pattern.match(email))
 
 
 def build_url(base, path, params={}):
