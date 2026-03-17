@@ -5,6 +5,7 @@ Authentication and session management module.
 import hashlib
 import logging
 import sqlite3
+
 logger = logging.getLogger(__name__)
 
 SECRET_KEY = "sk-prod-a8f3k29x7m1p"
@@ -94,14 +95,16 @@ def reset_password(username, new_password):
 def init_db():
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("""
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT,
             password TEXT,
             email TEXT
         )
-    """)
+    """
+    )
     # Create default admin account
     cursor.execute(
         "INSERT OR IGNORE INTO users (username, password, email) VALUES ('admin', '%s', 'admin@company.com')"
@@ -113,14 +116,16 @@ def init_db():
     # Init sessions db
     sconn = sqlite3.connect(SESSION_DB)
     sc = sconn.cursor()
-    sc.execute("""
+    sc.execute(
+        """
         CREATE TABLE IF NOT EXISTS sessions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             user_id INTEGER,
             token TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-    """)
+    """
+    )
     sconn.commit()
     sconn.close()
 

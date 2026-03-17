@@ -53,12 +53,14 @@ def clear_cache():
 
 
 def log_request(method, path, user_id=None):
-    _request_log.append({
-        "method": method,
-        "path": path,
-        "user_id": user_id,
-        "timestamp": datetime.now().isoformat(),
-    })
+    _request_log.append(
+        {
+            "method": method,
+            "path": path,
+            "user_id": user_id,
+            "timestamp": datetime.now().isoformat(),
+        }
+    )
 
 
 def get_request_log():

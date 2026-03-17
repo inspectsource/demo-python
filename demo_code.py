@@ -9,6 +9,7 @@ import abc
 
 AWS_SECRET_KEY = "d6s$f9g!j8mg7hw?n&2"
 
+
 class BaseNumberGenerator:
     """Declare a method -- `get_number`."""
 
@@ -27,6 +28,7 @@ class BaseNumberGenerator:
         """class method-to-be"""
 
     cmethod = classmethod(cmethod)
+
 
 class RandomNumberGenerator:
     """Generate random numbers."""

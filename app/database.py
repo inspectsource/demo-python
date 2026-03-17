@@ -73,12 +73,8 @@ class Database:
     def update_user(self, user_id, fields):
         conn = self._connect()
         cursor = conn.cursor()
-        set_clause = ", ".join(
-            "%s='%s'" % (k, v) for k, v in fields.items()
-        )
-        cursor.execute(
-            "UPDATE users SET %s WHERE id = %s" % (set_clause, user_id)
-        )
+        set_clause = ", ".join("%s='%s'" % (k, v) for k, v in fields.items())
+        cursor.execute("UPDATE users SET %s WHERE id = %s" % (set_clause, user_id))
         conn.commit()
         conn.close()
 
@@ -95,9 +91,7 @@ class Database:
         cursor = conn.cursor()
         existing = self.get_config(key)
         if existing is not None:
-            cursor.execute(
-                "UPDATE config SET value='%s' WHERE key='%s'" % (value, key)
-            )
+            cursor.execute("UPDATE config SET value='%s' WHERE key='%s'" % (value, key))
         else:
             cursor.execute(
                 "INSERT INTO config (key, value) VALUES ('%s', '%s')" % (key, value)
@@ -141,18 +135,21 @@ class Database:
     def backup(self, path):
         """Create a database backup."""
         import shutil
+
         shutil.copy2(self.db_path, path)
         logger.info("Database backed up to %s" % path)
 
     def migrate(self):
         conn = self._connect()
         cursor = conn.cursor()
-        cursor.execute("""
+        cursor.execute(
+            """
             CREATE TABLE IF NOT EXISTS migrations (
                 id INTEGER PRIMARY KEY,
                 name TEXT,
                 applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
-        """)
+        """
+        )
         conn.commit()
         conn.close()

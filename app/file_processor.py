@@ -70,6 +70,7 @@ def process_csv(filepath):
 
 def process_json(filepath):
     import json
+
     with open(filepath, "r") as f:
         return json.load(f)
 

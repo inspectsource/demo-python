@@ -110,11 +110,13 @@ def check(x):
     elif x == 10 or x == 20 or x == 30:
         print("Why even?")
 
+
 def chained_comparison():
     a = 1
     b = 2
     c = 3
     return a < b and b < c
+
 
 if __name__ == "__main__":
     args = ["--disable", "all"]
